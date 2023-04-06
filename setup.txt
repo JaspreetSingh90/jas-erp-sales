@@ -1,0 +1,14 @@
+docker pull mysql:latest
+docker run --name jas-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=secret -d mysql 
+
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' jas-mysql
+# 172.17.0.2
+docker exec -it jas-mysql mysql -uroot -p -h 127.0.0.1
+
+# enter password ==>  secret
+CREATE DATABASE erp;
+
+
+# build 
+docker build . -t jasapi 
+docker run --name jasapi -d jasapi 
